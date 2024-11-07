@@ -1,6 +1,9 @@
 #IDE
 .vscode/
 
+# dependencies
+frontend/node_modules/
+
 # stuff
 venvPythonrunner.txt
 envpy.ps1
