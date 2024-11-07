@@ -1,2 +1,6 @@
+#IDE
+.vscode/
+
+# stuff
 venvPythonrunner.txt
 envpy.ps1
