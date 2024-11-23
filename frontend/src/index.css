@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply m-0 w-full h-screen relative;
+  @apply m-0 w-full h-screen relative bg-indigo-600;
 }
 
 #root {

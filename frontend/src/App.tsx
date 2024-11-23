@@ -2,7 +2,14 @@ import { useState } from "react"
 
 const Messages = (): JSX.Element => {
   return (
-    <h1>Message</h1>
+    <>
+      <form action="">
+        <label htmlFor="search">Search</label>
+        <input type="text" id="search"/>
+      </form>
+
+      
+    </>
   )
 }
 
@@ -56,7 +63,7 @@ function App() {
 
   return (
     <>
-      <div className="absolute left-0 border-black border h-full w-72">
+      <div className="absolute left-0 h-full w-72">
         {isOnMeassges && <Messages />}
         {isOnNotifications && <Notifications />}
         {isOnSettings && <Settings />}
