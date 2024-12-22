@@ -1,11 +1,9 @@
 import icon from "../assets/favicon.svg";
-import { useNavigate, Outlet } from "react-router-dom";
 import { useState } from "react";
+import Verification from "./Verification";
 
 export default function Signup(): JSX.Element {
-  const navigate = useNavigate();
-
-  let isEmailValid = false;
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 
   const [emailFormCss, setEmailFormCss] = useState({
     top: "25%",
@@ -67,8 +65,11 @@ export default function Signup(): JSX.Element {
             />
           </label>
           <button
+            type="button"
             className="bg-primary rounded-lg text-black w-fit h-fit"
             onClick={() => {
+              if (isEmailValid === true) return;
+
               setEmailFormCss({
                 top: "25%",
                 left: "0%",
@@ -96,19 +97,14 @@ export default function Signup(): JSX.Element {
                   | "row-reverse"
                   | "column-reverse",
               });
-
-              isEmailValid = true;
-
-              if (isEmailValid) {
-                navigate("/signup/verification");
-              }
+              setIsEmailValid(true);
             }}
           >
             Confirm
           </button>
         </form>
       </div>
-      <Outlet />
+      {isEmailValid ?? <Verification isVerified={isEmailValid} token={email} />}
     </>
   );
 }

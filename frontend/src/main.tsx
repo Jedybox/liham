@@ -4,7 +4,6 @@ import './index.css'
 import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Verification from './pages/Verification.tsx'
 import Signup from './pages/Signup.tsx'
 import Login from './pages/Login.tsx'
 import Convo from './components/Convo.tsx'
@@ -38,13 +37,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'signup',
-    element: <Signup />,
-    children: [
-      {
-        path: 'verification',
-        element: <Verification />
-      }
-    ]
+    element: <Signup />
   },
   {
     path: 'login',

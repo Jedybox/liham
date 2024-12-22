@@ -1,13 +1,13 @@
 
-// interface VerificationProps {
-//   isVerified: boolean;
-//   token: string;
-// }
+interface VerificationProps {
+  isVerified: boolean;
+  token: string;
+}
 
-function Verification() {
+function Verification(props: VerificationProps): JSX.Element | null | undefined {
 
-  // if (!props.isVerified) 
-  //   return;
+  if (!props.isVerified) 
+    return;
   
   return (
     <div
