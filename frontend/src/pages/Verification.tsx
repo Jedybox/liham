@@ -1,7 +1,19 @@
 
+// interface VerificationProps {
+//   isVerified: boolean;
+//   token: string;
+// }
+
 function Verification() {
+
+  // if (!props.isVerified) 
+  //   return;
+  
   return (
-    <div>Verification</div>
+    <div
+      className="absolute"
+      >
+        Verification</div>
   )
 }
 

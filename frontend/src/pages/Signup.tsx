@@ -1,38 +1,114 @@
-import { Link, Outlet } from "react-router-dom"
-import { useState } from "react"
+import icon from "../assets/favicon.svg";
+import { useNavigate, Outlet } from "react-router-dom";
+import { useState } from "react";
 
 export default function Signup(): JSX.Element {
+  const navigate = useNavigate();
 
-    const [email, setEmail] = useState<string>('')
+  let isEmailValid = false;
 
-    return (
-        <>
-            <div 
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 flex flex-col gap-36 rounded-xl w-2/4 h-64 text-white items-center justify-center">
+  const [emailFormCss, setEmailFormCss] = useState({
+    top: "25%",
+    left: "45%",
+    position: "absolute" as
+      | "absolute"
+      | "relative"
+      | "fixed"
+      | "sticky"
+      | "static"
+      | "inherit"
+      | "initial"
+      | "unset",
+    width: "2/4",
+    height: "64",
+    borderRadius: "xl",
+    text: "white",
+    display: "flex",
+    items: "center",
+    justify: "center",
+    gap: "36",
+    p: "4",
+    flex: "column" as "column" | "row" | "row-reverse" | "column-reverse",
+  });
 
-                <img 
-                    src="./favicon.png" 
-                    alt="liham icon"
-                    className="w-36 h-36"/>
+  const [email, setEmail] = useState<string>("");
 
-                <form
-                    className="flex flex-col gap-4 items-center justify-center">
-                    <label>
-                        <input
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="text-black p-2 rounded-lg border-2 border-black"
-                            placeholder="Email"
-                            type="email"/>
-                    </label>
-                    <Link to="verification"
-                        className="bg-primary rounded-lg text-black w-fit h-fit">
-                        Confirm
-                    </Link>
-                </form>
-            </div>
-            <Outlet/>
-        </>
-    )
+  return (
+    <>
+      <div
+        className="gap-36 transition-all duration-500 ease-out"
+        id="email-form"
+        style={{
+          top: emailFormCss.top,
+          left: emailFormCss.left,
+          position: emailFormCss.position,
+          width: emailFormCss.width,
+          height: emailFormCss.height,
+          borderRadius: emailFormCss.borderRadius,
+          backgroundColor: emailFormCss.text,
+          display: emailFormCss.display,
+          alignItems: emailFormCss.items,
+          justifyContent: emailFormCss.justify,
+          gap: emailFormCss.gap,
+          padding: emailFormCss.p,
+          flexDirection: emailFormCss.flex,
+        }}
+      >
+        <img src={icon} alt="liham icon" className="w-36 h-36" />
+
+        <form className="flex flex-col gap-4 items-center justify-center">
+          <label>
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="text-black p-2 rounded-lg border-2 border-black"
+              placeholder="Email"
+              type="email"
+            />
+          </label>
+          <button
+            className="bg-primary rounded-lg text-black w-fit h-fit"
+            onClick={() => {
+              setEmailFormCss({
+                top: "25%",
+                left: "0%",
+                position: "absolute" as
+                  | "absolute"
+                  | "relative"
+                  | "fixed"
+                  | "sticky"
+                  | "static"
+                  | "inherit"
+                  | "initial"
+                  | "unset",
+                width: "2/4",
+                height: "64",
+                borderRadius: "xl",
+                text: "white",
+                display: "flex",
+                items: "center",
+                justify: "center",
+                gap: "36",
+                p: "4",
+                flex: "column" as
+                  | "column"
+                  | "row"
+                  | "row-reverse"
+                  | "column-reverse",
+              });
+
+              isEmailValid = true;
+
+              if (isEmailValid) {
+                navigate("/signup/verification");
+              }
+            }}
+          >
+            Confirm
+          </button>
+        </form>
+      </div>
+      <Outlet />
+    </>
+  );
 }
-
