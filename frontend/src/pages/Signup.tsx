@@ -1,6 +1,6 @@
 import icon from "../assets/favicon.svg";
 import { useState } from "react";
-import Verification from "./Verification";
+import Verification from "../components/Verification";
 
 export default function Signup(): JSX.Element {
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
@@ -34,7 +34,7 @@ export default function Signup(): JSX.Element {
   return (
     <>
       <div
-        className="gap-36 transition-all duration-500 ease-out"
+        className="gap-36 transition-all duration-500 ease-out w-"
         id="email-form"
         style={{
           top: emailFormCss.top,
@@ -65,14 +65,17 @@ export default function Signup(): JSX.Element {
             />
           </label>
           <button
-            type="button"
+            type="submit"
             className="bg-primary rounded-lg text-black w-fit h-fit"
-            onClick={() => {
+            onClick={(e) => {
+              
+              e.preventDefault();
+
               if (isEmailValid === true) return;
 
               setEmailFormCss({
                 top: "25%",
-                left: "0%",
+                left: "10%",
                 position: "absolute" as
                   | "absolute"
                   | "relative"
@@ -97,14 +100,16 @@ export default function Signup(): JSX.Element {
                   | "row-reverse"
                   | "column-reverse",
               });
+
               setIsEmailValid(true);
+              setTimeout(() => console.log(isEmailValid), 1000);
             }}
           >
             Confirm
           </button>
         </form>
       </div>
-      {isEmailValid ?? <Verification isVerified={isEmailValid} token={email} />}
+      {isEmailValid && <Verification isVerified={isEmailValid} token=""/>}
     </>
   );
 }

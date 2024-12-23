@@ -10,5 +10,5 @@ body {
 }
 
 #root {
-  @apply w-full h-full relative flex gap-3;
+  @apply w-full h-full relative flex gap-3 flex-row items-center justify-center;
 }
