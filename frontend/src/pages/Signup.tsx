@@ -34,7 +34,7 @@ export default function Signup(): JSX.Element {
   return (
     <>
       <div
-        className="gap-36 transition-all duration-500 ease-out w-"
+        className="gap-36 transition-all duration-500 ease-out w"
         id="email-form"
         style={{
           top: emailFormCss.top,

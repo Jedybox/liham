@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface VerificationProps {
   isVerified: boolean;
@@ -10,6 +11,21 @@ function Verification(
 ): JSX.Element | null | undefined {
 
   const [verificationCode, setVerificationCode] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+
+  const [verificationCss, setVerificationCss] = useState({
+    right: "calc(50% - 100.5px)",
+  })
+
+  const [passwordCss, setPasswordCss] = useState({
+    right: "-100%",
+  })
+
+  const [usernameCss, setUsernameCss] = useState({
+    right: "-100%",
+  })
 
   if (!props.isVerified) return null;
 
@@ -17,11 +33,20 @@ function Verification(
     e.preventDefault();
   };
 
+  const createPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  }
+
+  const createUser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  }
+
   return (
     <div className="absolute w-2/3 right-0 h-5/6 translate-x- translate-y- bg-white rounded-xl shadow-2xl flex flex-col items-center justify-center gap-4 overflow-hidden">
       <form
         onSubmit={verify}
-        className=" absolute flex flex-col gap-4 items-center justify-center"
+        className=" absolute flex flex-col gap-4 items-center justify-center transition-all duration-500 ease-out"
+        style={verificationCss}
       >
         <label htmlFor="verification-code" className="text-black">
           Verification Code
@@ -37,8 +62,74 @@ function Verification(
         <button 
           type="submit" 
           className="bg-black text-white p-2 rounded-lg"
+          onClick={() => {
+            setPasswordCss({ right: "calc(50% - 100.5px)" })
+            setVerificationCss({ right: "200%" })
+          }}
         >
           Verify
+        </button>
+      </form>
+
+      <form onSubmit={createPassword}
+        className=" absolute flex flex-col gap-4 items-center justify-center transition-all duration-500 ease-out"
+        style={passwordCss}>
+        <label htmlFor="password" className="text-black">
+          Password
+        </label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="text-black p-2 rounded-lg border-2 border-black"
+        />
+        <label htmlFor="confirm-password" className="text-black">
+          Confirm Password
+        </label>
+        <input
+          type="password"
+          name="confirm-password"
+          id="confirm-password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className="text-black p-2 rounded-lg border-2 border-black"
+        />
+        <button 
+          type="submit" 
+          className="bg-black text-white p-2 rounded-lg"
+          onClick={() => {
+            setUsernameCss({ right: "calc(50% - 100.5px)" })
+            setPasswordCss({ right: "200%" })
+          }}
+        >
+          Change Password
+        </button>
+      </form>
+
+      <form 
+        className="absolute flex flex-col gap-4 items-center justify-center transition-all duration-500 ease-out"
+        style={usernameCss}
+        onSubmit={createUser}>
+        <label htmlFor="username" className="text-black">
+          Username
+        </label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="text-black p-2 rounded-lg border-2 border-black"
+        />
+        <button 
+          type="submit" 
+          className="bg-black text-white p-2 rounded-lg"
+        >
+          <Link to="/">
+            Create Account
+          </Link>
         </button>
       </form>
     </div>
