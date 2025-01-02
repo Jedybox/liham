@@ -1,6 +1,8 @@
 import icon from "../assets/favicon.svg";
 import { useState } from "react";
 import Verification from "../components/Verification";
+import api from "../api";
+import { EmailCheckResponse } from "../res";
 
 export default function Signup(): JSX.Element {
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
@@ -31,6 +33,58 @@ export default function Signup(): JSX.Element {
 
   const [email, setEmail] = useState<string>("");
 
+  const handleEmailFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+
+      const response = await api.post<EmailCheckResponse>(
+        "/check-email/", 
+        { email },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      if (response.data.available === true) {
+        alert("Email sent!");
+      } else {
+        alert(response.data.message);
+      }
+
+    } catch (error) {
+      alert(error);
+    }
+
+    setEmailFormCss({
+      top: "25%",
+      left: "10%",
+      position: "absolute" as
+        | "absolute"
+        | "relative"
+        | "fixed"
+        | "sticky"
+        | "static"
+        | "inherit"
+        | "initial"
+        | "unset",
+      width: "2/4",
+      height: "64",
+      borderRadius: "xl",
+      text: "white",
+      display: "flex",
+      items: "center",
+      justify: "center",
+      gap: "36",
+      p: "4",
+      flex: "column" as
+        | "column"
+        | "row"
+        | "row-reverse"
+        | "column-reverse",
+    });
+    setIsEmailValid(true);
+
+  }
+
   return (
     <>
       <div
@@ -54,7 +108,9 @@ export default function Signup(): JSX.Element {
       >
         <img src={icon} alt="liham icon" className="w-36 h-36" />
 
-        <form className="flex flex-col gap-4 items-center justify-center">
+        <form 
+          onSubmit={handleEmailFormSubmit}
+          className="flex flex-col gap-4 items-center justify-center">
           <label>
             <input
               value={email}
@@ -67,43 +123,6 @@ export default function Signup(): JSX.Element {
           <button
             type="submit"
             className="bg-primary rounded-lg text-black w-fit h-fit"
-            onClick={(e) => {
-              
-              e.preventDefault();
-
-              if (isEmailValid === true) return;
-
-              setEmailFormCss({
-                top: "25%",
-                left: "10%",
-                position: "absolute" as
-                  | "absolute"
-                  | "relative"
-                  | "fixed"
-                  | "sticky"
-                  | "static"
-                  | "inherit"
-                  | "initial"
-                  | "unset",
-                width: "2/4",
-                height: "64",
-                borderRadius: "xl",
-                text: "white",
-                display: "flex",
-                items: "center",
-                justify: "center",
-                gap: "36",
-                p: "4",
-                flex: "column" as
-                  | "column"
-                  | "row"
-                  | "row-reverse"
-                  | "column-reverse",
-              });
-
-              setIsEmailValid(true);
-              setTimeout(() => console.log(isEmailValid), 1000);
-            }}
           >
             Confirm
           </button>
