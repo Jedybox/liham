@@ -6,6 +6,7 @@ import { EmailCheckResponse } from "../res";
 
 export default function Signup(): JSX.Element {
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const [emailFormCss, setEmailFormCss] = useState({
     top: "25%",
@@ -36,6 +37,10 @@ export default function Signup(): JSX.Element {
   const handleEmailFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!email) {
+      alert("Please enter an email address.");
+      return;
+    }
     try {
 
       const response = await api.post<EmailCheckResponse>(
@@ -44,14 +49,14 @@ export default function Signup(): JSX.Element {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      if (response.data.available === true) {
-        alert("Email sent!");
-      } else {
-        alert(response.data.message);
+      if (response.data.available === false) {
+        alert("Email already in use!");
+        return;
       }
 
     } catch (error) {
-      alert(error);
+      console.error(error);
+      return;
     }
 
     setEmailFormCss({
@@ -82,6 +87,7 @@ export default function Signup(): JSX.Element {
         | "column-reverse",
     });
     setIsEmailValid(true);
+    setIsDisabled(true);
 
   }
 
@@ -121,6 +127,7 @@ export default function Signup(): JSX.Element {
             />
           </label>
           <button
+            disabled={isDisabled}
             type="submit"
             className="bg-primary rounded-lg text-black w-fit h-fit"
           >
