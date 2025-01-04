@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../api";
 
 interface VerificationProps {
-  isVerified: boolean;
-  token: string;
+  email: string;
+  code: number;
 }
 
 function Verification(
@@ -26,8 +27,6 @@ function Verification(
   const [usernameCss, setUsernameCss] = useState({
     right: "-100%",
   })
-
-  if (!props.isVerified) return null;
 
   const verify = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,6 +67,14 @@ function Verification(
           }}
         >
           Verify
+        </button>
+        <button
+          type="button"
+          className="bg-black text-white p-2 rounded-lg"
+          onClick={() => {
+            api.post("/api/send-email/", { email: props.email });
+          }}>
+          Re-send
         </button>
       </form>
 

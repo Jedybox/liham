@@ -5,6 +5,7 @@ import api from "../api";
 import { EmailCheckResponse } from "../res";
 
 export default function Signup(): JSX.Element {
+  const [code, setCode] = useState<number>(0);
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
@@ -44,7 +45,7 @@ export default function Signup(): JSX.Element {
     try {
 
       const response = await api.post<EmailCheckResponse>(
-        "/check-email/", 
+        "api/check-email/", 
         { email },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -53,6 +54,11 @@ export default function Signup(): JSX.Element {
         alert("Email already in use!");
         return;
       }
+
+      const vcode = await api.post("api/send-email/", { email }, );
+      setCode(vcode.data.code);
+
+      console.log(vcode.data.code);
 
     } catch (error) {
       console.error(error);
@@ -135,7 +141,7 @@ export default function Signup(): JSX.Element {
           </button>
         </form>
       </div>
-      {isEmailValid && <Verification isVerified={isEmailValid} token=""/>}
+      {isEmailValid && <Verification email={email} code={code}/>}
     </>
   );
 }
