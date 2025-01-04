@@ -45,7 +45,7 @@ export default function Signup(): JSX.Element {
     try {
 
       const response = await api.post<EmailCheckResponse>(
-        "api/check-email/", 
+        "/api/check-email/", 
         { email },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -55,13 +55,13 @@ export default function Signup(): JSX.Element {
         return;
       }
 
-      const vcode = await api.post("api/send-email/", { email }, );
+      const vcode = await api.post("/api/send-email/", { email }, );
       setCode(vcode.data.code);
 
       console.log(vcode.data.code);
 
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return;
     }
 
