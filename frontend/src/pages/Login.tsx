@@ -15,7 +15,7 @@ export default function Login(): JSX.Element {
 
     try {
       // make a request to the server 
-      const res = await api.post('api/token/', );
+      const res = await api.post('api/token/', {username, password});
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
 

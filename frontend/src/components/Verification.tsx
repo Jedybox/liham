@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 interface VerificationProps {
@@ -10,6 +10,8 @@ interface VerificationProps {
 function Verification(
   props: VerificationProps
 ): JSX.Element | null | undefined {
+
+  const navigateTo = useNavigate();
 
   const [verificationCode, setVerificationCode] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -34,10 +36,31 @@ function Verification(
 
   const createPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (password === confirmPassword) {
+      setUsernameCss({ right: "calc(50% - 100.5px)" })
+      setPasswordCss({ right: "200%" })
+    }
   }
 
   const createUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    try {
+      const response = await api.post("/api/create-user/", {
+        email: props.email,
+        username,
+        password,
+      });
+
+      if (response.status === 201) {
+        navigateTo("/login");
+      }
+
+    } catch {
+      alert("An error occurred. Please try again.");
+      return;
+    }
+
   }
 
   return (
@@ -62,8 +85,13 @@ function Verification(
           type="submit" 
           className="bg-black text-white p-2 rounded-lg"
           onClick={() => {
-            setPasswordCss({ right: "calc(50% - 100.5px)" })
-            setVerificationCss({ right: "200%" })
+
+            const codeAsNumber = Number(verificationCode);
+            if (codeAsNumber === props.code) {
+              setPasswordCss({ right: "calc(50% - 100.5px)" })
+              setVerificationCss({ right: "200%" })
+            }
+            
           }}
         >
           Verify
@@ -106,10 +134,6 @@ function Verification(
         <button 
           type="submit" 
           className="bg-black text-white p-2 rounded-lg"
-          onClick={() => {
-            setUsernameCss({ right: "calc(50% - 100.5px)" })
-            setPasswordCss({ right: "200%" })
-          }}
         >
           Change Password
         </button>
@@ -134,9 +158,7 @@ function Verification(
           type="submit" 
           className="bg-black text-white p-2 rounded-lg"
         >
-          <Link to="/">
-            Create Account
-          </Link>
+          Create Account
         </button>
       </form>
     </div>

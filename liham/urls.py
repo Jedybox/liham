@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/send-email/', SendEmailView.as_view(), name='send-email'),
+    path('api/create-user/', CreateUserView.as_view(), name='create-user'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/check-email/', ChechEmailView.as_view(), name='check-email'),
 ]
