@@ -7,3 +7,6 @@ frontend/node_modules/
 # stuff
 venvPythonrunner.txt
 envpy.ps1
+
+# environment variables
+.env
