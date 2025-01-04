@@ -7,3 +7,11 @@ frontend/node_modules/
 # stuff
 venvPythonrunner.txt
 envpy.ps1
+
+# environment variables
+.env
+
+# all python cache
+**/__pycache__/
+
+db.sqlite3
