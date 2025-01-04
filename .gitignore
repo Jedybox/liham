@@ -13,3 +13,5 @@ envpy.ps1
 
 # all python cache
 **/__pycache__/
+
+db.sqlite3
