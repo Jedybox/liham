@@ -12,6 +12,8 @@ envpy.ps1
 .env
 
 # all python cache
-**/__pycache__/
+api/__pycache__/
+api/migrations/__pycache__/
+liham/__pycache__/
 
 db.sqlite3
