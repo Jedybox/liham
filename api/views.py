@@ -40,7 +40,7 @@ class AuthUserView(generics.RetrieveAPIView):
         
         pass
 
-class ChechEmailView(generics.CreateAPIView):
+class CheckEmailView(generics.CreateAPIView):
     serializer_class = EmailValdationView
     permission_classes = [AllowAny]
 

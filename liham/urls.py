@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, ChechEmailView, SendEmailView
+from api.views import CreateUserView, CheckEmailView, SendEmailView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -27,5 +27,5 @@ urlpatterns = [
     path('api/send-email/', SendEmailView.as_view(), name='send-email'),
     path('api/create-user/', CreateUserView.as_view(), name='create-user'),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/check-email/', ChechEmailView.as_view(), name='check-email'),
+    path('api/check-email/', CheckEmailView.as_view(), name='check-email'),
 ]
