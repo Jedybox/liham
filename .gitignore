@@ -4,10 +4,6 @@
 # dependencies
 frontend/node_modules/
 
-# stuff
-venvPythonrunner.txt
-envpy.ps1
-
 # vertual environment
 env/
 
