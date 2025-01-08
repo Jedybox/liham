@@ -8,12 +8,8 @@ frontend/node_modules/
 venvPythonrunner.txt
 envpy.ps1
 
+# vertual environment
+env/
+
 # environment variables
 .env
-
-# all python cache
-api/__pycache__/
-api/migrations/__pycache__/
-liham/__pycache__/
-
-db.sqlite3
