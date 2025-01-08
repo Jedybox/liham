@@ -27,7 +27,7 @@ function Settings(): JSX.Element {
             className="flex flex-col w-full gap-1"
             >
             <Link 
-                to="/account-settings"
+                to="a/1"
                 className='flex flex-row gap-2 justify-start items-center w-full h-12 '
                 >
                 <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,7 +39,7 @@ function Settings(): JSX.Element {
             </Link>
 
             <Link
-                to="/notification-settings"
+                to="n/1"
                 className='flex flex-row gap-2 items-center w-full h-12 '
                 >
                 <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +51,7 @@ function Settings(): JSX.Element {
             </Link>
 
             <Link
-                to="/privacy-settings"
+                to="s/1"
                 className='flex flex-row gap-2 items-center  w-full h-12 '
                 >
                 <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +62,7 @@ function Settings(): JSX.Element {
             </Link>
             
             <Link
-                to="/personalization"
+                to="p/1"
                 className='flex flex-row gap-2 items-center w-full h-12 '
                 >
                 <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
