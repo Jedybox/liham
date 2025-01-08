@@ -9,3 +9,6 @@ env/
 
 # environment variables
 .env
+
+# python caches
+__pycache__/
