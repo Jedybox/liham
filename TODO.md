@@ -1,5 +1,4 @@
 # Todos
 
-- ### Modifiy the all models and serializers in api app
-- ### Create APIVIEWS for api app
+- ### Create APIVIEWS for api app (not sure if finished)
 - ### Create the front end
