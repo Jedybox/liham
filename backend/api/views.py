@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import APIView
 from rest_framework import status, permissions, generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from . import serializers
 from django.contrib.auth.hashers import make_password, check_password
 

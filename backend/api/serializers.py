@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from . import models
 
 class UserSerializer(serializers.ModelSerializer):
@@ -37,6 +37,14 @@ class UserSerializer(serializers.ModelSerializer):
             user = models.users.find_one({"email": email})
         
         return True if user else False
+    
+    def authenticate_user(self, username: str, password: str):
+        user = models.users.find_one({"username": username})
+        
+        if user and check_password(password, user["password"]):
+            return True
+        
+        return False
 
 
 class MessageSerializer(serializers.ModelSerializer):
