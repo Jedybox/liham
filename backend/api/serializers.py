@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
-from models import users, messages, conversations, friend_list, friend_request, block_list
+from . import models
 
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=150)
@@ -12,11 +12,32 @@ class UserSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         validated_data["password"] = make_password(validated_data["password"])
-        user_id = users.insert_one(validated_data).inserted_id
-        return users.find_one({"_id": user_id})
+        user_id = models.users.insert_one(validated_data).inserted_id
+        return models.users.find_one({"_id": user_id})
     
     def update(self, instance, validated_data):
         pass
+
+    def get_user(self, username: str):
+        user = models.users.find_one({"username": username})
+        
+        if user:
+            user["_id"] = str(user["_id"])
+        
+        return user
+    
+    def exist(self, username=None, email=None):
+        
+        user: dict = None
+        
+        if username:
+            user = models.users.find_one({"username": username})
+        
+        if email:
+            user = models.users.find_one({"email": email})
+        
+        return True if user else False
+
 
 class MessageSerializer(serializers.ModelSerializer):
     sender = serializers.CharField()
@@ -25,8 +46,8 @@ class MessageSerializer(serializers.ModelSerializer):
     timestamp = serializers.DateTimeField()
     
     def create(self, validated_data):
-        message_id = messages.insert_one(validated_data).inserted_id
-        return messages.find_one({"_id": message_id})
+        message_id = models.messages.insert_one(validated_data).inserted_id
+        return models.messages.find_one({"_id": message_id})
     
     def update(self, instance, validated_data):
         pass
@@ -36,8 +57,8 @@ class ConversationSerializer(serializers.ModelSerializer):
     messages = MessageSerializer(many=True)
     
     def create(self, validated_data):
-        conversation_id = conversations.insert_one(validated_data).inserted_id
-        return conversations.find_one({"_id": conversation_id})
+        conversation_id = models.conversations.insert_one(validated_data).inserted_id
+        return models.conversations.find_one({"_id": conversation_id})
     
     def update(self, instance, validated_data):
         pass
@@ -47,8 +68,8 @@ class FriendListSerializer(serializers.ModelSerializer):
     friends = serializers.ListField(child=serializers.CharField())
     
     def create(self, validated_data):
-        friend_list_id = friend_list.insert_one(validated_data).inserted_id
-        return friend_list.find_one({"_id": friend_list_id})
+        friend_list_id = models.friend_list.insert_one(validated_data).inserted_id
+        return models.friend_list.find_one({"_id": friend_list_id})
     
     def update(self, instance, validated_data):
         pass
@@ -58,8 +79,8 @@ class FriendRequestSerializer(serializers.ModelSerializer):
     receiver = serializers.CharField()
     
     def create(self, validated_data):
-        friend_request_id = friend_request.insert_one(validated_data).inserted_id
-        return friend_request.find_one({"_id": friend_request_id})
+        friend_request_id = models.friend_request.insert_one(validated_data).inserted_id
+        return models.friend_request.find_one({"_id": friend_request_id})
     
     def update(self, instance, validated_data):
         pass
@@ -67,8 +88,8 @@ class FriendRequestSerializer(serializers.ModelSerializer):
 class BlockListSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
-        block_list_id = block_list.insert_one(validated_data).inserted_id
-        return block_list.find_one({"_id": block_list_id})
+        block_list_id = models.block_list.insert_one(validated_data).inserted_id
+        return models.block_list.find_one({"_id": block_list_id})
     
     def update(self, instance, validated_data):
         pass
