@@ -1,14 +1,16 @@
-from django.shortcuts import render
-from rest_framework import generics, status
+from django.http import JsonResponse
+from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import LihamUser, User
+from rest_framework.permissions import AllowAny
+from .models import User
 from rest_framework.response import Response
 from .serializers import LihamUserSerializer, UserSerializer
 
 # Create your views here.
+def index(request):
+    return JsonResponse({'message':f'fuck off and your request:{request}'},status=status.HTTP_404_NOT_FOUND)
 
-class UserView(APIView):
+class CreateUserView(APIView):
     LihamUser_serializer_class = LihamUserSerializer
     User_serializer_class = UserSerializer
     permission_classes = [AllowAny]

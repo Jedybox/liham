@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import UserView
+from .views import CreateUserView, index
 
 urlpatterns = [
-    path('user/', UserView.as_view()),
+    path(' ', index),
+    path('create-user/', CreateUserView.as_view()),
 ]
