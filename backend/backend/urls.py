@@ -23,4 +23,5 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('token/', TokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
+    path('relations/', include('relations.urls')),
 ]
