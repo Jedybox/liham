@@ -1,0 +1,49 @@
+from django.shortcuts import render
+from rest_framework import generics, status
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .models import LihamUser, User
+from rest_framework.response import Response
+from .serializers import LihamUserSerializer, UserSerializer
+
+# Create your views here.
+
+class UserView(APIView):
+    LihamUser_serializer_class = LihamUserSerializer
+    User_serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+    
+    
+    def post(self, request):
+        
+        user_serializer = self.User_serializer_class(data=request.data)
+        
+        if user_serializer.is_valid():
+            user = user_serializer.save()
+            
+            request.data['user'] = user.id
+            
+            user = User.objects.get(id=user.id)
+            
+            lihamdata = {
+                'user': user.id,
+                'bio': '',
+                'image': None,
+                'is_active': False,
+            }
+            
+            
+            liham_user_serializer = self.LihamUser_serializer_class(data=lihamdata)
+            
+            if liham_user_serializer.is_valid():
+                liham_user_serializer.save()
+                
+                return Response(liham_user_serializer.data, status=status.HTTP_201_CREATED)
+            
+            print(liham_user_serializer.errors)
+            return Response(liham_user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
