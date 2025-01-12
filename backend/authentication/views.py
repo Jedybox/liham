@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import User
 from rest_framework.response import Response
 from .serializers import LihamUserSerializer, UserSerializer
@@ -48,4 +48,30 @@ class CreateUserView(APIView):
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
+class UserView(APIView):
+    LihamUser_serializer_class = LihamUserSerializer
+    User_serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
     
+    def put(self, request):
+        user = request.user
+        user_serializer = self.User_serializer_class(user, data=request.data, partial=True)
+        
+        if user_serializer.is_valid():
+            user_serializer.save()
+            
+            return Response(user_serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        user = request.user
+        user_serializer = self.User_serializer_class(user)
+        
+        return Response(user_serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self, request):
+        user = request.user
+        user.delete()
+        
+        return Response(status=status.HTTP_204_NO_CONTENT)
