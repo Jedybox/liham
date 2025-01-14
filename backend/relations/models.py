@@ -6,7 +6,7 @@ from authentication.models import User
 class FriendRequest(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender', null=False)
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver', null=False)
-    is_active = models.BooleanField(default=True)
+    status = models.CharField(max_length=50, default='PENDING')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

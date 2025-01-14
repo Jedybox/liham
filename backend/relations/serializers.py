@@ -5,7 +5,7 @@ from .models import FriendRequest, FriendList, BlockList
 class FriendRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendRequest
-        fields = ['id', 'sender', 'receiver', 'is_active', 'created_at', 'updated_at']
+        fields = ['id', 'sender', 'receiver', 'status', 'created_at', 'updated_at']
     
 class FriendListSerializer(serializers.ModelSerializer):
     class Meta:
