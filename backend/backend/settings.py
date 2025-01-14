@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     # Local apps
     'authentication',
     'relations',
+    'message',
 ]
 
 MIDDLEWARE = [
