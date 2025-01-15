@@ -1,7 +1,7 @@
 function Login(): JSX.Element {
   return (
     <>
-        <h1> login</h1>
+        <h1></h1>
     </>
   );
 }
