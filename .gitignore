@@ -12,3 +12,6 @@ env/
 
 # python caches
 __pycache__/
+
+# frontend dist
+frontend/dist/
