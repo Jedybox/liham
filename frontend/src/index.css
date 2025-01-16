@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+
+  --backgound: 227, 236, 248;
+  --primary: 217, 217, 217;
+  --secondary: 166, 166, 166;
+  --subpage: 206, 216, 240;
+
+  --agree: 53, 110, 255;
+  --disagree: 255, 85, 85;
+
+  background-color: rgb(var(--backgound));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --backgound: 24, 24, 24;
+    --primary: 217, 217, 217;
+    --secondary: 166, 166, 166;
+    --subpage: 32, 32, 32;
+
+    background-color: rgb(var(--backgound));
+  }
+  
+}
+
 body {
   @apply
     m-0
@@ -11,11 +36,11 @@ body {
     font-baybayin
 }
 
-.root {
+#root {
   @apply
     flex
     flex-col
     h-full
     w-full
-    p-4
+    p-0
 }
