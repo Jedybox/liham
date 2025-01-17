@@ -22,7 +22,7 @@ export default function InputField({
         value={value}
         onChange={onChange}
         placeholder={label}
-        className="w-72 h-12 p-3 text-center text-black bg-primary rounded-xl shadow-md placeholder-black onfocus:outline-none"
+        className="w-72 h-10 p-3 text-center shadow-inputfield text-black bg-primary rounded-xl placeholder-black onfocus:outline-none"
       />
     </label>
   );

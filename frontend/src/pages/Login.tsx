@@ -18,10 +18,10 @@ function Login(): JSX.Element {
   return (
     <div
       
-      className="flex flex-col items-center justify-center"
+      className="flex flex-col items-center justify-center w-fit h-full self-center"
     >
       <img // icon
-        className="mt-28 mb-36"
+        className="mb-36 shadow-iconLog rounded-full"
         src={icon}
         alt="icon"
         width="175"
@@ -31,7 +31,7 @@ function Login(): JSX.Element {
       <form 
         onSubmit={handleSubmit} 
         method="post"
-        className="flex flex-col items-center justify-center space-y-4"
+        className="flex flex-col items-center justify-center space-y-3"
       >
         <InputField
           label="Username"
@@ -47,16 +47,25 @@ function Login(): JSX.Element {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <br />
-        <button type="submit">Log-in</button>
-        <button 
-          type="button" 
-          onClick={() => navigate("/signup")}
+        <div
+          className="flex flex-row items-center justify-center space-x-4 w-fit h-fit"
         >
-          Sign-up
-        </button>
-        <br />
+          <button 
+            className="shadow-inputfield bg-agree w-24 h-5 text-white text-xs rounded-xl"
+            type="submit"
+          >
+            Log-in
+          </button>
+          <button 
+            className="shadow-inputfield bg-disagree  w-24 h-5 text-white text-xs rounded-xl"
+            type="button" 
+            onClick={() => navigate("/signup")}
+          >
+            Sign-up
+          </button>
+        </div>
         <button 
+          className="text-xs"
           type="button" 
           onClick={() => navigate("/forgot-password")}
         >
