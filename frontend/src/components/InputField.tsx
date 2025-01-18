@@ -7,7 +7,7 @@ interface InputFieldProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function InputField({
+function InputField({
   label,
   type,
   name,
@@ -15,7 +15,7 @@ export default function InputField({
   onChange,
 }: InputFieldProps): JSX.Element {
   return (
-    <label htmlFor="" className="flex flex-col items-center font-azert font-bold">
+    <label htmlFor="" className="flex flex-col items-center font-azert font-bold tracking-tighter">
       <input
         type={type}
         name={name}
@@ -27,3 +27,32 @@ export default function InputField({
     </label>
   );
 }
+
+interface InputFieldSignUpProps {
+  value: string;
+  type: string;
+  placeholder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function InputFieldSignUp({
+  value,
+  type,
+  placeholder,
+  onChange,
+}: InputFieldSignUpProps) : JSX.Element {
+return (
+  <label htmlFor="" className="flex flex-col items-center font-azert font-bold tracking-tighter">
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className="w-72 h-10 p-3 text-center bg-white border-2 border-slate-950 shadow-inputfield text-black bg-primary rounded-xl  placeholder-zinc-800 "
+    />
+  </label>
+);
+}
+
+export { InputFieldSignUp };
+export default InputField;

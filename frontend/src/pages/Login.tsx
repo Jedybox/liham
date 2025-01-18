@@ -18,7 +18,7 @@ function Login(): JSX.Element {
   return (
     <div
       
-      className="flex flex-col items-center justify-center w-fit h-full self-center"
+      className="flex flex-col items-center justify-center w-full h-full self-center"
     >
       <img // icon
         className="mb-36 shadow-iconLog rounded-full"

@@ -1,8 +1,14 @@
 import { Navigate } from "react-router-dom";
 
-function Logout(): JSX.Element {
+function LogOut(): JSX.Element {
   localStorage.clear();
   return <Navigate to="/login" />;
 }
 
-export default Logout;
+function LogOutAndSingIn(): JSX.Element {
+  localStorage.clear();
+  return <Navigate to="/login" />;
+}
+
+export { LogOutAndSingIn };
+export default LogOut;

@@ -2,15 +2,18 @@ import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
 import { useState } from "react";
 import icon from "../assets/icons/icon.png";
+import SignUpForm from "../components/SignUpForm";
 
 function Signup(): JSX.Element {
   const [email, setEmail] = useState<string>("");
 
-  const [ifEmailFormMoved, setFirstFormPosition] = useState<boolean>(false);
+  const [EmailFormMoved, setFirstFormPosition] = useState<boolean>(false);
+  const [SignUpFormMoved, setSignUpFormMoved] = useState<boolean>(false);
 
     const handleEmail = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setFirstFormPosition(true);
+        setTimeout(():void => setSignUpFormMoved(true) ,500);
     }
 
   return (
@@ -35,7 +38,7 @@ function Signup(): JSX.Element {
       </Link>
 
       <div
-        className={`flex flex-col items-center justify-center w-1/4 h-full ${ifEmailFormMoved ? 'translate-x-0' :'translate-x-[140%]'} transition-all duration-500 ease-in-out`}
+        className={`flex flex-col items-center justify-center w-1/3 h-full ${EmailFormMoved ? 'translate-x-0' :'translate-x-[150%]'} transition-all duration-500 ease-in-out`}
       >
         <img // icon
           className="mb-36 shadow-iconLog rounded-full"
@@ -58,11 +61,15 @@ function Signup(): JSX.Element {
           <button 
             className="shadow-inputfield bg-agree w-24 h-5 text-white text-xs rounded-xl"
             type="submit"
+            disabled={EmailFormMoved}
           >
             Use Email
           </button>
         </form>
       </div>
+      <SignUpForm 
+        className={`flex flex-col items-center justify-center w-full h-full p-20 ${SignUpFormMoved ? 'translate-x-0' : 'translate-x-[100%]'} transition-all duration-1000 ease-in-out`}
+      />
     </>
   );
 }

@@ -34,13 +34,15 @@ body {
     h-screen
     w-screen
     font-baybayin
+    overflow-hidden
 }
 
 #root {
   @apply
     flex
-    flex-col
+    flex-row
     h-full
     w-full
     p-0
+    overflow-hidden
 }

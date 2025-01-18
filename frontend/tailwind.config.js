@@ -23,7 +23,7 @@ export default {
 
       fontFamily: {
         baybayin: ["Noto Sans Tagalog", "serif"],
-        azerto: ["Azert Mono", "monospace"],
+        azert: ["Azert Mono", "monospace"],
       }
     },
   },
