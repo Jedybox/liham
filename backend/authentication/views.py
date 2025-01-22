@@ -5,6 +5,10 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import User
 from rest_framework.response import Response
 from .serializers import LihamUserSerializer, UserSerializer
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
+import random
 
 # Create your views here.
 def index(request):
@@ -14,7 +18,6 @@ class CreateUserView(APIView):
     LihamUser_serializer_class = LihamUserSerializer
     User_serializer_class = UserSerializer
     permission_classes = [AllowAny]
-    
     
     def post(self, request):
         
@@ -46,8 +49,7 @@ class CreateUserView(APIView):
             return Response(liham_user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+      
 class UserView(APIView):
     LihamUser_serializer_class = LihamUserSerializer
     User_serializer_class = UserSerializer
@@ -75,3 +77,50 @@ class UserView(APIView):
         user.delete()
         
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+"""
+This checks if email is already in use
+"""
+class CheckEmailView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        email = request.data.get('email')
+        
+        if not email:
+            return Response(
+                {"error": "Email query parameter is required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Validate email format
+        try:
+            validate_email(email)
+        except ValidationError:
+            print("Invalid email format.")
+            return Response(
+                {"error": "Invalid email format."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Check if email is already in use
+        email_in_use = User.objects.filter(email=email).exists()
+        
+        if email_in_use:
+            return Response(
+                {"email_in_use": True, "message": "Email is already in use."},
+                status=status.HTTP_409_CONFLICT  # Conflict status code
+            )
+        
+        verificationCode = random.randint(100000, 999999)
+        
+        print(f"Verification code: {verificationCode}")
+        
+        return Response(
+            {
+                "email_in_use": False, "message": "Email is available.",
+                "verificationCode": verificationCode
+            },
+            status=status.HTTP_200_OK
+        )

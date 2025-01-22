@@ -3,6 +3,7 @@ import InputField from "../components/InputField";
 import { useState } from "react";
 import icon from "../assets/icons/icon.png";
 import SignUpForm from "../components/SignUpForm";
+import api from "../api";
 
 function Signup(): JSX.Element {
   const [email, setEmail] = useState<string>("");
@@ -10,11 +11,30 @@ function Signup(): JSX.Element {
   const [EmailFormMoved, setFirstFormPosition] = useState<boolean>(false);
   const [SignUpFormMoved, setSignUpFormMoved] = useState<boolean>(false);
 
-    const handleEmail = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+  const [VerificationCode, setVerificationCode] = useState<number|undefined>();
+
+  const handleEmail = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+
+      const response = await api.post("/user/check-email/", 
+        { email }
+      )
+
+      if (response.status === 200) {
         setFirstFormPosition(true);
-        setTimeout(():void => setSignUpFormMoved(true) ,500);
+        setSignUpFormMoved(true);
+        setVerificationCode(response.data.verificationCode);
+      }
+
+    } catch  (error) {
+      console.error(error);
     }
+
+  };
+
+  const getForm = (code: string) => <SignUpForm theCode={code} email={email}/>;
 
   return (
     <>
@@ -38,7 +58,9 @@ function Signup(): JSX.Element {
       </Link>
 
       <div
-        className={`flex flex-col items-center justify-center w-1/3 h-full ${EmailFormMoved ? 'translate-x-0' :'translate-x-[150%]'} transition-all duration-500 ease-in-out`}
+        className={`flex flex-col items-center justify-center w-1/3 h-full ${
+          EmailFormMoved ? "translate-x-0" : "translate-x-[150%]"
+        } transition-all duration-500 ease-in-out`}
       >
         <img // icon
           className="mb-36 shadow-iconLog rounded-full"
@@ -47,18 +69,21 @@ function Signup(): JSX.Element {
           width="175"
           height="175"
         />
-        <form onSubmit={handleEmail} method="post"
-          className="flex flex-col items-center gap-5 w-72 h-36">
+        <form
+          onSubmit={handleEmail}
+          method="post"
+          className="flex flex-col items-center gap-5 w-72 h-36"
+        >
           <InputField
             label="Email"
-            type="email"
-            name="username"
+            type="text"
+            name="email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
-          <button 
+          <button
             className="shadow-inputfield bg-agree w-24 h-5 text-white text-xs rounded-xl"
             type="submit"
             disabled={EmailFormMoved}
@@ -67,9 +92,9 @@ function Signup(): JSX.Element {
           </button>
         </form>
       </div>
-      <SignUpForm 
-        className={`flex flex-col items-center justify-center w-full h-full p-20 ${SignUpFormMoved ? 'translate-x-0' : 'translate-x-[100%]'} transition-all duration-1000 ease-in-out`}
-      />
+      <div className="w-full h-full">
+        {SignUpFormMoved && getForm(VerificationCode?.toString() || "")}
+      </div>
     </>
   );
 }
