@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface DialogProps {
   title: string;
@@ -40,14 +39,13 @@ function Dialog({
 interface TermsAndRegulationsProps {
     isOpen: boolean;
     agreed: boolean;
-    close: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    agree: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    close: (e: React.SyntheticEvent<HTMLDialogElement>) => void;
+    agree: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    createAccount: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-function TermsAndRegulations ({ isOpen, agreed, agree, close }: TermsAndRegulationsProps ): JSX.Element {
+function TermsAndRegulations ({ isOpen, agreed, agree, close, createAccount }: TermsAndRegulationsProps ): JSX.Element {
     const refCon = useRef<HTMLDialogElement>(null);
-
-    const navTo = useNavigate()
 
     useEffect(() => {
       if (refCon.current){
@@ -73,7 +71,7 @@ function TermsAndRegulations ({ isOpen, agreed, agree, close }: TermsAndRegulati
             </section>
             
             <button disabled={!agreed}
-                onClick={() => navTo("/")}
+                onClick={(e) => {createAccount(e)}}
                 className="absolute right-8 bottom-4 h-fit w-fit bg-lime-400 px-5 py-2"
             >
                 Create Account

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { InputFieldSignUp } from "./InputField";
 import { TermsAndRegulations } from "./Dialog";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 interface SignUpFormProps {
@@ -9,6 +10,8 @@ interface SignUpFormProps {
 }
 
 function SignUpForm({ theCode, email }: SignUpFormProps): JSX.Element {
+
+  const navigate = useNavigate();
 
   const [agree, setAgree] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -69,6 +72,13 @@ function SignUpForm({ theCode, email }: SignUpFormProps): JSX.Element {
       return;
     }
 
+    setIsDialogOpen(true);
+    console.log('n')
+  };
+
+  const [transx, setTransx] = useState<string>("translate-x-[100%]");
+
+  const createAccount = async () => {
     api.post("/user/create-user/", {
       username: username,
       password: password,
@@ -81,17 +91,13 @@ function SignUpForm({ theCode, email }: SignUpFormProps): JSX.Element {
     .then((response) => {
       if (response.status === 201) {
         alert("Account Created");
+        navigate("/login");
       }
     })
     .catch((error) => {
       console.error(error);
     });
-
-    setIsDialogOpen(true);
-    console.log('n')
   };
-
-  const [transx, setTransx] = useState<string>("translate-x-[100%]");
 
   useEffect(() => {
     setTransx("translate-x-0");
@@ -174,6 +180,7 @@ function SignUpForm({ theCode, email }: SignUpFormProps): JSX.Element {
         agree={() => setAgree(!agree)}
         close={() => setIsDialogOpen(false)}
         agreed={agree}
+        createAccount={() => createAccount()}
       />
     </div>
   );

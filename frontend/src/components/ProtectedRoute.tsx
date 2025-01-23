@@ -5,64 +5,66 @@ import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 import { useState, useEffect } from "react";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<null | boolean>(null);
 
   useEffect(() => {
-    auth();
-  });
+    const authenticate = async () => {
+      try {
+        const token = localStorage.getItem(ACCESS_TOKEN);
+
+        if (!token) {
+          setIsAuthenticated(false);
+          return;
+        }
+
+        const decoded: { exp: number } = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+
+        if (decoded.exp < currentTime) {
+          await refreshToken();
+        } else {
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error("Authentication error:", error);
+        setIsAuthenticated(false);
+      }
+    };
+
+    authenticate();
+  }, []);
 
   const refreshToken = async () => {
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-    
     try {
-      const res = await api.post("token/refresh/", { refresh: refreshToken });
+      const refresh = localStorage.getItem(REFRESH_TOKEN);
 
+      if (!refresh) {
+        setIsAuthenticated(false);
+        return;
+      }
+
+      const res = await api.post("/token/refresh/", { refresh });
       if (res.status === 200) {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
       }
-
-    } catch {
-      console.error("Error refreshing token");
+    } catch (error) {
+      console.error("Token refresh error:", error);
       setIsAuthenticated(false);
     }
-
-  }
-
-  const auth = async () => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-    
-    if (!token) {
-      setIsAuthenticated(false);
-      return;
-    }
-
-    const decoded = jwtDecode(token);
-    const exp: number | undefined = decoded.exp;
-    const currentTime = Date.now() / 1000;
-
-    if (exp === undefined) {
-      setIsAuthenticated(false);
-      return;
-    }
-
-    if (exp < currentTime) {
-      await refreshToken();
-    } else {
-      setIsAuthenticated(true);
-    }
-
-  }
+  };
 
   if (isAuthenticated === null) {
     return <div>Loading...</div>;
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
-
+  return isAuthenticated ? (
+    <>{children}</>
+  ) : (
+    <Navigate to="/login" replace />
+  );
 }
 
 export default ProtectedRoute;
