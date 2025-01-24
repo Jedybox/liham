@@ -27,6 +27,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/signup" element={<Signup />}/>
         <Route path="/logout" element={<LogOut />}/>
         <Route path="/logout-and-sign-in" element={<LogOutAndSingIn />}/>
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
