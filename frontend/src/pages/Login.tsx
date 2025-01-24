@@ -66,7 +66,7 @@ function Login(): JSX.Element {
         />
         <div className="flex flex-row items-center justify-center space-x-4 w-fit h-fit">
           <button
-            className="shadow-inputfield bg-agree w-24 h-5 text-white text-xs rounded-xl"
+            className="shadow-inputfield bg-agree w-24 h-5 text-white text-xs rounded-xl font-azert"
             type="submit"
           >
             Log-in
