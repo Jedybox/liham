@@ -24,7 +24,7 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={label}
-        className="w-72 h-10 p-3 text-center shadow-inputfield text-black bg-primary rounded-xl placeholder-black placeholder:font-semibold"
+        className="w-72 h-10 p-3 text-center shadow-inputfield text-black bg-primary rounded-xl placeholder:font-semibold focus:outline-none focus:bg-primary autofill:bg-primary"
       />
     </label>
   );
@@ -52,7 +52,7 @@ return (
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="w-72 h-10 p-3 text-center bg-white  border-2 border-slate-950 shadow-inputfield text-black bg-primary rounded-xl  placeholder-zinc-800 "
+      className="w-72 h-10 p-3 text-center bg-white border-2 border-slate-950 shadow-inputfield text-black bg-primary rounded-xl focus:outline-none"
     />
   </label>
 );

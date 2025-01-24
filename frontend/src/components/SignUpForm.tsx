@@ -121,7 +121,7 @@ function SignUpForm({ theCode, email }: SignUpFormProps): JSX.Element {
           />
 
           <button
-            className="shadow-inputfield bg-agree w-24 h-5 text-white text-xs rounded-xl"
+            className="shadow-inputfield bg-agree w-24 h-5 text-white text-xs rounded-xl font-azert"
             type="submit"
           >
             Verify
