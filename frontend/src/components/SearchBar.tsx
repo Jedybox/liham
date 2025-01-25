@@ -5,9 +5,10 @@ interface SearchBarProps {
     subject: string;
     onChangeSubject: (e: string) => void;
     search: (event: React.FormEvent<HTMLFormElement>) => void;
+    changeTab: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-function SearchBar({ subject, onChangeSubject, search } : SearchBarProps): JSX.Element {
+function SearchBar({ subject, onChangeSubject, search, changeTab } : SearchBarProps): JSX.Element {
   
   const [focused, setFocused] = useState<boolean>(false);
 
@@ -18,9 +19,11 @@ function SearchBar({ subject, onChangeSubject, search } : SearchBarProps): JSX.E
     >
       <SearcIcon focused={focused}/>
       <input
+        id="search"
         onFocus={(e) => {
             setFocused(true);
             e.target.placeholder = "";
+            changeTab(e);
         }}
         onBlur={(e) => {
             setFocused(false);
