@@ -101,7 +101,13 @@ function SideBar(): JSX.Element {
           className={`absolute transition-all ease-in-out duration-500 w-full h-full bg-primary 
           ${currentTab[2] ? "-translate-x-0" : "-translate-x-[110%]"}`}
         >
-          set
+          <h1>Settings</h1>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
         <div 
           className={`absolute transition-all ease-in-out duration-500 w-full h-full bg-primary 
