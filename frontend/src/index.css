@@ -12,6 +12,9 @@
   --agree: 53, 110, 255;
   --disagree: 255, 85, 85;
 
+  --primary-convo: 166, 166, 166;
+  --secondary-convo: 217, 217, 217;
+
   background-color: rgb(var(--backgound));
 }
 
@@ -45,4 +48,13 @@ body {
     w-full
     p-0
     overflow-hidden
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
 }

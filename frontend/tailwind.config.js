@@ -14,6 +14,9 @@ export default {
 
         agree: "rgb(var(--agree))",
         disagree: "rgb(var(--disagree))",
+
+        primaryConvo: "rgb(var(--primary-convo))",
+        secondaryConvo: "rgb(var(--secondary-convo))",
       },
 
       boxShadow: {

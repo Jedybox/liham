@@ -22,6 +22,8 @@ createRoot(document.getElementById('root')!).render(
             </ProtectedRoute>
           }
         >
+          <Route path="/m/:id" element={<h1>Convo</h1>} />
+          <Route path="/u/:id" element={<h1>Profile</h1>} />
         </Route>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<Signup />}/>
