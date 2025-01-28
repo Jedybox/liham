@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Nav from "./Nav";
 import SearchBar from "./SearchBar";
 import ConvoBox from "./ConvoBox";
+import { AccountIcon, BulbIcon, InfoIcon, PreferencesIcon, PrivacyIcon, ThemeIcon } from "./SVGIcons";
 
 function SideBar(): JSX.Element {
   // const navigate = useNavigate();
@@ -99,15 +100,28 @@ function SideBar(): JSX.Element {
         </div>
         <div
           className={`absolute transition-all ease-in-out duration-500 w-full h-full bg-primary 
-          ${currentTab[2] ? "-translate-x-0" : "-translate-x-[110%]"}`}
+          ${currentTab[2] ? "-translate-x-0" : "-translate-x-[110%]"} flex flex-col gap-2 items-start
+          hide-scrollbar p-5`}
         >
           <h1>Settings</h1>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div className="flex gap-2 items-center">
+            <AccountIcon /> <h1>Account</h1>
+          </div>
+          <div className="flex gap-2 items-center">
+            <PrivacyIcon /> <h1>Privacy</h1>
+          </div>
+          <div className="flex gap-2 items-center">
+            <PreferencesIcon /> <h1>Preferences</h1>
+          </div>
+          <div className="flex gap-2 items-center">
+            <ThemeIcon /> <h1>Theme</h1>
+          </div>
+          <div className="flex gap-2 items-center">
+            <BulbIcon /> <h1>Learn</h1>
+          </div>
+          <div className="flex gap-2 items-center">
+            <InfoIcon /> <h1>About</h1>
+          </div>
         </div>
         <div 
           className={`absolute transition-all ease-in-out duration-500 w-full h-full bg-primary 
