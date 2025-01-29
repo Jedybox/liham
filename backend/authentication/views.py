@@ -49,7 +49,9 @@ class CreateUserView(APIView):
             return Response(liham_user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-      
+    
+        
+    
 class UserView(APIView):
     LihamUser_serializer_class = LihamUserSerializer
     User_serializer_class = UserSerializer
@@ -67,8 +69,22 @@ class UserView(APIView):
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        user = request.user
-        user_serializer = self.User_serializer_class(user)
+        
+        search = request.query_params.get('query')
+        
+        print(f"Search query: {search}")
+            
+        users = User.objects.filter(username__icontains=search)
+        
+        for user in users:
+            username = user.username
+            
+            if search.lower() in username.lower():
+                continue
+                
+            users = users.exclude(username=username)
+            
+        user_serializer = self.User_serializer_class(users, many=True)
         
         return Response(user_serializer.data, status=status.HTTP_200_OK)
     

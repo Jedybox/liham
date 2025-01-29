@@ -33,7 +33,10 @@ function SearchBar({ subject, onChangeSubject, search, changeTab } : SearchBarPr
         type="text"
         placeholder="Search"
         value={subject}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeSubject(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          onChangeSubject(e.target.value);
+          console.log(e.target.value);
+        }}
       />
     </form>
   );

@@ -3,14 +3,28 @@ import React, { useState } from "react";
 import Nav from "./Nav";
 import SearchBar from "./SearchBar";
 import ConvoBox from "./ConvoBox";
-import { AccountIcon, BulbIcon, InfoIcon, PreferencesIcon, PrivacyIcon, ThemeIcon } from "./SVGIcons";
+import api from "../api";
+import {
+  AccountIcon,
+  BulbIcon,
+  InfoIcon,
+  PreferencesIcon,
+  PrivacyIcon,
+  ThemeIcon,
+} from "./SVGIcons";
+import { ACCESS_TOKEN } from "../constants";
 
 function SideBar(): JSX.Element {
   const navigate = useNavigate();
 
   const [subject, setSubject] = useState<string>("");
 
-  const [currentTab, setCurrentTab] = useState<boolean[]>([true, false, false, false]);
+  const [currentTab, setCurrentTab] = useState<boolean[]>([
+    true,
+    false,
+    false,
+    false,
+  ]);
 
   const changeSidebar = async (
     event:
@@ -18,8 +32,8 @@ function SideBar(): JSX.Element {
       | React.FocusEvent<HTMLInputElement>
   ): Promise<void> => {
     event.preventDefault();
-    
-    let tab:number = -1;
+
+    let tab: number = -1;
 
     switch (event.currentTarget.id) {
       case "message":
@@ -63,14 +77,28 @@ function SideBar(): JSX.Element {
       default:
         return;
     }
-
   };
 
-  const search = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // navigate(`/search/${subject}`);
+  const [searchResults, setSearchResults] = useState<object | null>(null);
 
-    alert(`Searching for ${subject}`);
+  const search = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await api.get("/user/search/", {
+        params: {
+          query: subject,
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        },
+      });
+
+      setSearchResults(response.data);
+      
+    } catch (error) {
+      console.error("Search error:", error);
+    }
   };
 
   return (
@@ -84,13 +112,13 @@ function SideBar(): JSX.Element {
       <div className="relative w-full h-full">
         <div
           className={`absolute transition-all ease-in-out duration-500 w-full h-full 
-          ${currentTab[0] ? "-translate-x-0" : "-translate-x-[110%]"} flex flex-col gap-2 overflow-auto hide-scrollbar`}
+          ${
+            currentTab[0] ? "-translate-x-0" : "-translate-x-[110%]"
+          } flex flex-col gap-2 overflow-auto hide-scrollbar`}
         >
-          {
-            Array.from({ length: 20 }, (_, i) => (
-              <ConvoBox key={i} />
-            ))
-          }
+          {Array.from({ length: 20 }, (_, i) => (
+            <ConvoBox key={i} />
+          ))}
         </div>
         <div
           className={`absolute transition-all ease-in-out duration-500 w-full h-2 bg-primary 
@@ -100,35 +128,63 @@ function SideBar(): JSX.Element {
         </div>
         <div
           className={`absolute transition-all ease-in-out duration-500 w-full h-full bg-primary 
-          ${currentTab[2] ? "-translate-x-0" : "-translate-x-[110%]"} flex flex-col gap-2 items-start
-          hide-scrollbar p-5`}
+          ${
+            currentTab[2] ? "-translate-x-0" : "-translate-x-[110%]"
+          } flex flex-col gap-2 items-start px-5`}
         >
-          <h1>Settings</h1>
-          <button className="flex gap-2 items-center"
+          <h1 className="">Settings</h1>
+          <button
+            className="flex gap-2 items-center"
             onClick={() => navigate("/u/123")}
           >
             <AccountIcon /> <h1>Account</h1>
           </button>
-          <div className="flex gap-2 items-center">
+          <button
+            className="flex gap-2 items-center"
+            onClick={() => navigate("/privacy")}
+          >
             <PrivacyIcon /> <h1>Privacy</h1>
-          </div>
-          <div className="flex gap-2 items-center">
+          </button>
+          <button
+            className="flex gap-2 items-center"
+            onClick={() => navigate("/preferences")}
+          >
             <PreferencesIcon /> <h1>Preferences</h1>
-          </div>
-          <div className="flex gap-2 items-center">
+          </button>
+          <button
+            className="flex gap-2 items-center"
+            onClick={() => navigate("/theme")}
+          >
             <ThemeIcon /> <h1>Theme</h1>
-          </div>
-          <div className="flex gap-2 items-center">
+          </button>
+          <button
+            className="flex gap-2 items-center"
+            onClick={() => navigate("/learn")}
+          >
             <BulbIcon /> <h1>Learn</h1>
-          </div>
-          <div className="flex gap-2 items-center">
+          </button>
+          <button
+            className="flex gap-2 items-center"
+            onClick={() => navigate("/about")}
+          >
             <InfoIcon /> <h1>About</h1>
-          </div>
+          </button>
         </div>
-        <div 
-          className={`absolute transition-all ease-in-out duration-500 w-full h-full bg-primary 
-          ${currentTab[3] ? "-translate-x-0" : "-translate-x-[110%]"}`}>
-          sear
+        <div
+          className={`absolute transition-all ease-in-out duration-500 w-full h-full
+          ${
+            currentTab[3] ? "-translate-x-0" : "-translate-x-[110%]"
+          } overflow-auto hide-scrollbar`}
+        >
+          {
+            searchResults ? (
+              Object.keys(searchResults).map((key) => (
+                <ConvoBox key={key} />
+              ))
+            ) : (
+              <h1>No results found</h1>
+            )
+          }
         </div>
       </div>
       <Nav changebar={changeSidebar} />

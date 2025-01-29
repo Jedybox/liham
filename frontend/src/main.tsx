@@ -9,7 +9,11 @@ import Signup from './pages/Signup.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx'
 import LogOut, { LogOutAndSingIn } from './components/LogOut.tsx'
 import UserAccount from './pages/subpages/UserAccount.tsx'
-
+import UserPrivacy from './pages/subpages/UserPrivacy.tsx'
+import UserPreferences from './pages/subpages/UserPreferences.tsx'
+import About from './pages/subpages/About.tsx'
+import Learn from './pages/subpages/Learn.tsx'
+import Conversation from './pages/subpages/Conversation.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -23,8 +27,13 @@ createRoot(document.getElementById('root')!).render(
             </ProtectedRoute>
           }
         >
-          <Route path="/m/:id" element={<h1>Convo</h1>} />
+          <Route path="/m/:id" element={<Conversation/>} />
           <Route path="/u/:id" element={<UserAccount />} />
+          <Route path="/privacy" element={<UserPrivacy/>} />
+          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="/preferences" element={ <UserPreferences/> } />
+          <Route path="/about" element={<About/>} />
+          <Route path="/learn" element={<Learn/>} />
         </Route>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<Signup />}/>
