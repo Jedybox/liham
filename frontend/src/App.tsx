@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <SideBar />
-      <div className="w-full h-full">
+      <div className="w-full h-full p-8">
         <Outlet/>
       </div>
     </>

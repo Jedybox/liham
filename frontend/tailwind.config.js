@@ -22,6 +22,7 @@ export default {
       boxShadow: {
         iconLog: "0px 8px 4px 0px rgba(0, 0, 0, 0.25)",
         inputfield: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+        subpageshadow: "0px 10px 4px rgba(0, 0, 0, 0.25)",
       },
 
       fontFamily: {

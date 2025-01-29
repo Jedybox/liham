@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Nav from "./Nav";
 import SearchBar from "./SearchBar";
@@ -6,7 +6,7 @@ import ConvoBox from "./ConvoBox";
 import { AccountIcon, BulbIcon, InfoIcon, PreferencesIcon, PrivacyIcon, ThemeIcon } from "./SVGIcons";
 
 function SideBar(): JSX.Element {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [subject, setSubject] = useState<string>("");
 
@@ -104,9 +104,11 @@ function SideBar(): JSX.Element {
           hide-scrollbar p-5`}
         >
           <h1>Settings</h1>
-          <div className="flex gap-2 items-center">
+          <button className="flex gap-2 items-center"
+            onClick={() => navigate("/u/123")}
+          >
             <AccountIcon /> <h1>Account</h1>
-          </div>
+          </button>
           <div className="flex gap-2 items-center">
             <PrivacyIcon /> <h1>Privacy</h1>
           </div>

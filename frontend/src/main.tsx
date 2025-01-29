@@ -8,6 +8,7 @@ import Login from './pages/Login.tsx'
 import Signup from './pages/Signup.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx'
 import LogOut, { LogOutAndSingIn } from './components/LogOut.tsx'
+import UserAccount from './pages/subpages/UserAccount.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -23,7 +24,7 @@ createRoot(document.getElementById('root')!).render(
           }
         >
           <Route path="/m/:id" element={<h1>Convo</h1>} />
-          <Route path="/u/:id" element={<h1>Profile</h1>} />
+          <Route path="/u/:id" element={<UserAccount />} />
         </Route>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<Signup />}/>
