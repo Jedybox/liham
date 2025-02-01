@@ -94,6 +94,11 @@ class UserView(APIView):
         
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+def get_me(request):
+    user = request.user
+    Liham_UserSerializer = LihamUserSerializer(user.id)
+    
+    return JsonResponse(Liham_UserSerializer.data, status=status.HTTP_200_OK)
 
 """
 This checks if email is already in use
