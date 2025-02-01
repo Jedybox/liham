@@ -26,27 +26,9 @@ function SideBar(): JSX.Element {
     false,
     false,
   ]);
-  const [lastTab, setLastTab] = useState<number>(0);
+
   const [tabIndicator, setTabIndicator] = useState<boolean>(true);
   const [searchResults, setSearchResults] = useState<object | null>(null);
-
-  const cancelSearch = ():void => {
-    switch (lastTab) {
-      case 0:
-        setCurrentTab([true, false, false, false]);
-        break;
-      case 1:
-        setCurrentTab([false, true, false, false]);
-        break;
-      case 2:
-        setCurrentTab([false, false, true, false]);
-        break;
-      default:
-        return;
-    }
-    setTabIndicator(true);
-    setSearchResults(null);
-  };
 
   const changeSidebar = async (
     event:
@@ -56,7 +38,6 @@ function SideBar(): JSX.Element {
     event.preventDefault();
 
     let tab: number = -1;
-    let last: number = -1;
 
     switch (event.currentTarget.id) {
       case "message":
@@ -70,20 +51,13 @@ function SideBar(): JSX.Element {
         break;
       case "search":
         tab = 3;
-
-        if (currentTab[0]) last = 0;
-        if (currentTab[1]) last = 1;
-        if (currentTab[2]) last = 2;
-        
-        if (currentTab[3]) break;
-
-        setLastTab(last);
         setTabIndicator(false);
-
         break;
       default:
         return;
     }
+
+    if (tab !== 3) setTabIndicator(true);
 
     console.log(tab);
 
@@ -93,6 +67,8 @@ function SideBar(): JSX.Element {
 
     // delay for the animation to finish
     await new Promise((resolve) => setTimeout(resolve, 500));
+
+    if (tab !== 3) setSearchResults(null);
 
     switch (tab) {
       case 0:
@@ -110,6 +86,7 @@ function SideBar(): JSX.Element {
       default:
         return;
     }
+
   };
 
   const search = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -131,7 +108,6 @@ function SideBar(): JSX.Element {
       
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
-        // refreshToken 
 
         const refresh = localStorage.getItem(REFRESH_TOKEN);
 
@@ -163,7 +139,6 @@ function SideBar(): JSX.Element {
         subject={subject}
         onChangeSubject={setSubject}
         search={search}
-        cancelSearch={cancelSearch}
       />
       <div className="relative w-full h-full">
         <div
@@ -225,9 +200,9 @@ function SideBar(): JSX.Element {
           </button>
         </div>
         <div
-          className={`absolute transition-all ease-in-out duration-500 w-full h-full
+          className={`absolute transition-all ease duration-500 w-full h-full
           ${
-            currentTab[3] ? "-translate-x-0" : "-translate-x-[110%]"
+            currentTab[3] ? "opacity-100" : "opacity-0"
           } overflow-auto hide-scrollbar`}
         >
           {

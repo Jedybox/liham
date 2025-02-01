@@ -85,14 +85,10 @@ export function LogOutIcon(): JSX.Element {
   );
 }
 
-interface SearcIconProps {
-  focused: boolean;
-}
 
-export function SearcIcon({ focused }: SearcIconProps): JSX.Element {
+export function SearcIcon(): JSX.Element {
   return (
     <svg
-      className={`${focused ? "-left-9" : "-left-0 "}`}
       width="26"
       height="26"
       viewBox="0 0 32 32"
