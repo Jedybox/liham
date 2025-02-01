@@ -12,7 +12,8 @@ import {
   PrivacyIcon,
   ThemeIcon,
 } from "./SVGIcons";
-import { ACCESS_TOKEN } from "../constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import axios from "axios";
 
 function SideBar(): JSX.Element {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ function SideBar(): JSX.Element {
   ]);
   const [lastTab, setLastTab] = useState<number>(0);
   const [tabIndicator, setTabIndicator] = useState<boolean>(true);
+  const [searchResults, setSearchResults] = useState<object | null>(null);
 
   const cancelSearch = ():void => {
     switch (lastTab) {
@@ -43,6 +45,7 @@ function SideBar(): JSX.Element {
         return;
     }
     setTabIndicator(true);
+    setSearchResults(null);
   };
 
   const changeSidebar = async (
@@ -109,10 +112,10 @@ function SideBar(): JSX.Element {
     }
   };
 
-  const [searchResults, setSearchResults] = useState<object | null>(null);
-
   const search = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (subject.length === 0 || subject.trim() === "") return;
 
     try {
       const response = await api.get("/user/search/", {
@@ -127,7 +130,29 @@ function SideBar(): JSX.Element {
       setSearchResults(response.data);
       
     } catch (error) {
-      console.error("Search error:", error);
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        // refreshToken 
+
+        const refresh = localStorage.getItem(REFRESH_TOKEN);
+
+        if (!refresh) {
+          navigate("/login");
+          return;
+        }
+
+        const res = await api.post("/token/refresh/", { refresh });
+
+        if (res.status === 200) {
+          localStorage.setItem(ACCESS_TOKEN, res.data.access);
+          search(event);
+        } else {
+          navigate("/login");
+        }
+      }
+
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        setSearchResults(null);
+      }
     }
   };
 
