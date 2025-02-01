@@ -59,8 +59,6 @@ function SideBar(): JSX.Element {
 
     if (tab !== 3) setTabIndicator(true);
 
-    console.log(tab);
-
     if (currentTab[tab] || tab === -1) return;
 
     setCurrentTab([false, false, false, false]);
@@ -69,7 +67,7 @@ function SideBar(): JSX.Element {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     if (tab !== 3) setSearchResults(null);
-
+    
     switch (tab) {
       case 0:
         setCurrentTab([true, false, false, false]);
@@ -200,10 +198,9 @@ function SideBar(): JSX.Element {
           </button>
         </div>
         <div
-          className={`absolute transition-all ease duration-500 w-full h-full
-          ${
-            currentTab[3] ? "opacity-100" : "opacity-0"
-          } overflow-auto hide-scrollbar`}
+          className={`absolute transition-all ease-in-out duration-500 w-full h-full
+          ${currentTab[3] ? "opacity-100" : "opacity-0 pointer-events-none"}
+           overflow-auto hide-scrollbar`}
         >
           {
             searchResults ? (
