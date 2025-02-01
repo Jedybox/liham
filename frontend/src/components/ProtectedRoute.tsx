@@ -3,9 +3,13 @@ import { jwtDecode } from "jwt-decode";
 import api from "../api";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../state/User/User";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<null | boolean>(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const authenticate = async () => {
@@ -25,6 +29,20 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
         } else {
           setIsAuthenticated(true);
         }
+
+        const res = await api.get("/user/me/");
+        
+        if (res.status === 200) {
+          dispatch(
+            setUser({
+              id: res.data.id,
+              name: res.data.name,
+              email: res.data.email,
+              image: res.data.image,
+            })
+          );
+        }
+
       } catch (error) {
         console.error("Authentication error:", error);
         setIsAuthenticated(false);
