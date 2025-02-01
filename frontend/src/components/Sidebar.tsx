@@ -25,6 +25,25 @@ function SideBar(): JSX.Element {
     false,
     false,
   ]);
+  const [lastTab, setLastTab] = useState<number>(0);
+  const [tabIndicator, setTabIndicator] = useState<boolean>(true);
+
+  const cancelSearch = ():void => {
+    switch (lastTab) {
+      case 0:
+        setCurrentTab([true, false, false, false]);
+        break;
+      case 1:
+        setCurrentTab([false, true, false, false]);
+        break;
+      case 2:
+        setCurrentTab([false, false, true, false]);
+        break;
+      default:
+        return;
+    }
+    setTabIndicator(true);
+  };
 
   const changeSidebar = async (
     event:
@@ -34,6 +53,7 @@ function SideBar(): JSX.Element {
     event.preventDefault();
 
     let tab: number = -1;
+    let last: number = -1;
 
     switch (event.currentTarget.id) {
       case "message":
@@ -47,6 +67,16 @@ function SideBar(): JSX.Element {
         break;
       case "search":
         tab = 3;
+
+        if (currentTab[0]) last = 0;
+        if (currentTab[1]) last = 1;
+        if (currentTab[2]) last = 2;
+        
+        if (currentTab[3]) break;
+
+        setLastTab(last);
+        setTabIndicator(false);
+
         break;
       default:
         return;
@@ -108,6 +138,7 @@ function SideBar(): JSX.Element {
         subject={subject}
         onChangeSubject={setSubject}
         search={search}
+        cancelSearch={cancelSearch}
       />
       <div className="relative w-full h-full">
         <div
@@ -116,9 +147,7 @@ function SideBar(): JSX.Element {
             currentTab[0] ? "-translate-x-0" : "-translate-x-[110%]"
           } flex flex-col gap-2 overflow-auto hide-scrollbar`}
         >
-          {Array.from({ length: 20 }, (_, i) => (
-            <ConvoBox key={i} />
-          ))}
+          <ConvoBox />
         </div>
         <div
           className={`absolute transition-all ease-in-out duration-500 w-full h-2 bg-primary 
@@ -187,7 +216,7 @@ function SideBar(): JSX.Element {
           }
         </div>
       </div>
-      <Nav changebar={changeSidebar} />
+      <Nav tabIndicator={tabIndicator} changebar={changeSidebar} />
     </aside>
   );
 }

@@ -6,9 +6,10 @@ interface SearchBarProps {
     onChangeSubject: (e: string) => void;
     search: (event: React.FormEvent<HTMLFormElement>) => void;
     changeTab: (event: React.FocusEvent<HTMLInputElement>) => void;
+    cancelSearch: () => void;
 }
 
-function SearchBar({ subject, onChangeSubject, search, changeTab } : SearchBarProps): JSX.Element {
+function SearchBar({ subject, onChangeSubject, search, changeTab, cancelSearch } : SearchBarProps): JSX.Element {
   
   const [focused, setFocused] = useState<boolean>(false);
 
@@ -28,6 +29,7 @@ function SearchBar({ subject, onChangeSubject, search, changeTab } : SearchBarPr
         onBlur={(e) => {
             setFocused(false);
             e.target.placeholder = "Search";
+            cancelSearch();
         }}
         className="w-full h-ful bg-transparent focus:outline-none focus:border-none"
         type="text"

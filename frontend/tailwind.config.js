@@ -28,7 +28,19 @@ export default {
       fontFamily: {
         baybayin: ["Noto Sans Tagalog", "serif"],
         azert: ["Azert Mono", "monospace"],
-      }
+      },
+
+      keyframes: {
+        shrink: {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(0)" },
+        },
+      },
+
+      animation: {
+        shrink: "shrink 0.5s ease-in-out forwards 1",
+      },
+
     },
   },
   plugins: [],

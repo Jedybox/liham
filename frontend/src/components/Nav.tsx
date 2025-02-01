@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 interface NavProps {
   changebar: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  tabIndicator: boolean;
 }
 
-export default function Nav({ changebar } : NavProps) : JSX.Element {
+export default function Nav({ changebar, tabIndicator } : NavProps) : JSX.Element {
 
     const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ export default function Nav({ changebar } : NavProps) : JSX.Element {
 
     return (
         <nav className="relative flex flex-row border-black border-[1px] bg-primary shadow-inputfield gap-4 h-fit py-2 px-3 rounded-full align-center">
-            <div className={`absolute bg-white w-7 h-7 rounded-full top-[0.35rem] ${currentTab} transition-all ease-in-out duration-500`}/>
+            <div className={`absolute bg-gray-300 w-7 h-7 rounded-full top-[0.35rem] ${currentTab} ${tabIndicator ? '' : 'scale-[0]'} transition-all ease-in-out duration-500`}/>
             <button className="w-fit h-fit rounded-full z-10"
               id="message"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
