@@ -94,12 +94,6 @@ class UserView(APIView):
         
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-def get_me(request):
-    user = request.user
-    Liham_UserSerializer = LihamUserSerializer(user.id)
-    
-    return JsonResponse(Liham_UserSerializer.data, status=status.HTTP_200_OK)
-
 """
 This checks if email is already in use
 """
@@ -145,3 +139,25 @@ class CheckEmailView(APIView):
             },
             status=status.HTTP_200_OK
         )
+
+
+class Me(APIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        
+        print(f"User: {user}")
+        
+        liham_user = LihamUserSerializer(user.liham_user)
+        user_serializer = UserSerializer(user)
+        
+        return JsonResponse({
+            'user': user_serializer.data.get('username'),
+            'email': user_serializer.data.get('email'),
+            'id': user_serializer.data.get('id'),
+            'image': liham_user.data.get('image'),
+            }, status=status.HTTP_200_OK)
+    
+   

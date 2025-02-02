@@ -5,9 +5,12 @@ import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../state/User/User";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<null | boolean>(null);
+  const user = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
 
@@ -30,18 +33,29 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
           setIsAuthenticated(true);
         }
 
-        const res = await api.get("/user/me/");
+        const res = await api.get(
+          "/user/me/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         
         if (res.status === 200) {
           dispatch(
             setUser({
               id: res.data.id,
-              name: res.data.name,
+              name: res.data.user,
               email: res.data.email,
               image: res.data.image,
             })
           );
         }
+
+        console.log(res)
+
+        console.log("User name:", user.name);
 
       } catch (error) {
         console.error("Authentication error:", error);

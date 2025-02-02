@@ -5,6 +5,7 @@ interface UserState {
   name: string;
   email: string;
   image: string[];
+  bio: string;
 }
 
 const initialState: UserState = {
@@ -12,6 +13,7 @@ const initialState: UserState = {
   name: "",
   email: "",
   image: [],
+  bio: "",
 };
 
 const userSlice = createSlice({
@@ -23,12 +25,14 @@ const userSlice = createSlice({
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.image = action.payload.image;
+      state.bio = action.payload.bio;
     },
     clearUser(state) {
       state.id = "";
       state.name = "";
       state.email = "";
       state.image = [];
+      state.bio = "";
     },
   },
 });
