@@ -49,6 +49,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
               name: res.data.user,
               email: res.data.email,
               image: res.data.image,
+              bio: res.data.bio,
             })
           );
         }
