@@ -158,6 +158,7 @@ class Me(APIView):
             'email': user_serializer.data.get('email'),
             'id': user_serializer.data.get('id'),
             'image': liham_user.data.get('image'),
+            'bio': liham_user.data.get('bio'),
             }, status=status.HTTP_200_OK)
     
    
