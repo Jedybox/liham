@@ -18,3 +18,5 @@ frontend/dist/
 
 # temp files
 temp/
+
+.$db_diagram.drawio.bkp
