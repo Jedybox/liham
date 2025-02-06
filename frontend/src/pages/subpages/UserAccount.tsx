@@ -17,7 +17,7 @@ const UserAccount = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="flex flex-col  w-full h-full bg-subpage rounded-2xl shadow-subpageshadow">
+    <div className="flex flex-col  w-full h-full bg-subpage rounded-2xl shadow-subpageshadow text-black">
       <header className="h-1/4 w-full flex items-center justify-center rounded-t-2xl overflow-hidden relative">
         <img
           src={cover}
@@ -44,15 +44,16 @@ const UserAccount = (): JSX.Element => {
         <div className="h-4 w-4 bg-isOnline rounded-full ml-2" />
       </div>
 
-      <section className="flex flex-row items-center justify-center w-full">
-        <div className="flex flex-col w-1/2 h-full">
-          <div>
+      <section className="flex flex-row items-center justify-center w-full font-azert">
+        <div className="flex flex-col w-1/2 h-full tracking-tighter px-4 py-2">
+          <div className="ml-[5%] w-fit h-fit">
             <p>
-              <span className="font-semibold">Email:</span> {user.email}
+              <span className="">Email:</span> {user.email}
             </p>
-
+          </div>
+          <div className="ml-[5%] w-fit h-fit">
             <p>
-              <span className="font-semibold">Bio:</span> {user.bio}
+              {user.bio === "" ?  "Bio: No bio provided" : "Bio: " + user.bio}
             </p>
           </div>
         </div>
