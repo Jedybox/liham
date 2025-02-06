@@ -15,6 +15,9 @@
   --primary-convo: 166, 166, 166;
   --secondary-convo: 217, 217, 217;
 
+  --is-online: 80, 194, 45;
+  --is-offline: 115, 115, 115;
+
   background-color: rgb(var(--backgound));
 }
 

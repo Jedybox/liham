@@ -17,6 +17,9 @@ export default {
 
         primaryConvo: "rgb(var(--primary-convo))",
         secondaryConvo: "rgb(var(--secondary-convo))",
+
+        isOnline: "rgb(var(--is-online))",
+        isOffline: "rgb(var(--is-offline))",
       },
 
       boxShadow: {
@@ -28,6 +31,14 @@ export default {
       fontFamily: {
         baybayin: ["Noto Sans Tagalog", "serif"],
         azert: ["Azert Mono", "monospace"],
+      },
+      
+      fontWeight: {
+        light: 300,
+        normal: 400,
+        medium: 500,
+        semibold: 600,
+        bold: 700,
       },
 
       keyframes: {
