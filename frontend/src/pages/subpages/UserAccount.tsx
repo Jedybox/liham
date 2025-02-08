@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { PenIcon } from "../../components/SVGIcons";
 
 import cover from "../../temp/cover.jpg";
 import pfp from "../../temp/pfp.png";
@@ -8,7 +9,7 @@ import pfp from "../../temp/pfp.png";
 const UserAccount = (): JSX.Element => {
   const user = useSelector((state: RootState) => state.user);
 
-  // const isOnline: boolean = user.isOnline;
+  const [isOnline, setIsOnline] = useState<boolean>(true);
 
   useEffect(() => {
     document.title = "Liham | Account";
@@ -39,34 +40,82 @@ const UserAccount = (): JSX.Element => {
         </div>
 
         {/*User name*/}
-        <div className="text-2xl font-azert font-medium  ml-4 px-3 py-1 bg-subpage rounded-full  tracking-tighter">
-          <h1>{user.name}</h1>
+        <div className="text-3xl font-azert font-medium  ml-4 px-3 py-1 bg-subpage rounded-full  tracking-tighter">
+          <h1>jhon.box</h1>
         </div>
 
-        <div className="h-4 w-4 bg-isOnline rounded-full ml-2" />
+        {/*Online indicator*/}
+        <div
+          className={`h-4 w-4 ${
+            isOnline ? "bg-isOnline" : "bg-isOffline"
+          } rounded-full ml-2`}
+        />
       </div>
 
-      <section className="flex flex-row items-center justify-center w-full h-3/5 font-azert bottom-0 absolute">
-        <div className="flex flex-col w-1/2 h-full tracking-tighter px-4 py-2">
-          <div className="ml-[5%] w-fit h-fit">
+      <section className="flex flex-row items-center justify-center w-full h-3/5 font-azert bottom-0 relative font-semibold">
+        <div className="flex flex-col gap-6 w-[50%] h-full tracking-tighter px-[5%] py-2">
+          <div className="w-full h-fit text-base">
             <p>
-              <span className="">Email:</span> {user.email}
+              <span className="">Email:</span> {user.email} <PenIcon />
             </p>
           </div>
-          <div className="ml-[5%] w-fit h-fit">
+
+          <div className="w-full h-fit text-base">
             <p>
-              {user.bio === "" ? "Bio: No bio provided" : "Bio: " + user.bio}
+              {user.bio === "" ? "Bio: " : user.bio}{" "}
+              <span>
+                <PenIcon />
+              </span>
             </p>
           </div>
-          <div className="ml-[5%]">
-            <label className="flex justify-between items-center w-fit h-fit">
+
+          <div className=" flex flex-row items-center w-full h-fit mt-auto">
+            <h1 className="w-fit text-base font-azert font-semibold tracking-tighter">
+              Active visibility
+            </h1>
+            <label className="flex flex-row justify-between items-center w-fit h-fit">
               {/* <input type="checkbox" className="appearance-none peer" checked={isOnline}/> */}
-              <input type="checkbox" className="appearance-none peer" />
-              <span className="w-16 h-10 flex items-center flex-shrink-0 ml-4 p-1 bg-gray-300 rounded-full duration-300 ease-in-out peer-checked:bg-green-400 after:w-8 after:h-8 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6"></span>
+              <input
+                type="checkbox"
+                className="appearance-none peer"
+                checked={isOnline}
+                onClick={() => setIsOnline(!isOnline)}
+              />
+              <span className="w-14 h-8 flex items-center flex-shrink-0 ml-4 p-1 bg-isOffline rounded-full duration-300 ease-in-out peer-checked:bg-isOnline after:w-6 after:h-6 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6"></span>
             </label>
           </div>
         </div>
-        <div className="w-1/2"></div>
+
+        <div className="w-full flex flex-col items-center justify-center h-full tracking-tighter pr-10">
+          <div className="w-full h-[90%] bg-white rounded-r-2xl rounded-b-2xl relative">
+            <div className="absolute -top-6 text-white bg-[#859ede] px-3 rounded-t-xl">
+              <h1 className="m-0 p-0">Friends</h1>
+            </div>
+
+            {/*List of friends*/}
+            <div className="w-full h-fit flex flex-col items-center justify-center tracking-tighter overflow-y-auto">
+              <div className="w-full h-fit text-sm flex flex-row items-center p-2 relative">
+                <img
+                  src={pfp}
+                  alt=""
+                  className="w-16 h-16 mr-[5%] ml-[5%] object-cover rounded-full"
+                />
+                <h1 className="font-azert text-lg">kerby</h1>
+                <div className="w-fit h-fit absolute float-end right-[5%] flex flex-row items-center justify-center gap-4 text-white font-azert text-base">
+                  <button className="w-20 h-fit bg-[#38629A] rounded-full">
+                    <h1>Message</h1>
+                  </button>
+                  <button className="w-20 h-fit bg-[#A0A0A0] rounded-full">
+                    <h1>Unfriend</h1>
+                  </button>
+                  <button className="w-20 h-fit bg-[#BA5959] rounded-full">
+                    <h1>Block</h1>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );

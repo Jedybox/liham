@@ -6,8 +6,9 @@
 }
 
 @font-face {
-    font-family: "Azeret Mono";
+    font-family: "Azeret Mono", serif;
     font-style: normal;
-    font-weight: normal;
-    src: url('../assets/fonts/AzeretMono-Regular.ttf') format('truetype');
+    font-weight: bold;
+    font-optical-sizing: auto;
+    src: url('../assets/fonts/AzeretMono-VariableFont_wght.ttf') format('truetype');
 }
