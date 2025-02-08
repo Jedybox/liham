@@ -5,6 +5,7 @@ import { PenIcon } from "../../components/SVGIcons";
 
 import cover from "../../temp/cover.jpg";
 import pfp from "../../temp/pfp.png";
+import Switch from "../../components/Switch";
 
 const UserAccount = (): JSX.Element => {
   const user = useSelector((state: RootState) => state.user);
@@ -17,7 +18,7 @@ const UserAccount = (): JSX.Element => {
     if (!user) {
       console.log("User not logged in");
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="flex flex-col  w-full h-full bg-subpage rounded-2xl shadow-subpageshadow text-black relative">
@@ -73,16 +74,7 @@ const UserAccount = (): JSX.Element => {
             <h1 className="w-fit text-base font-azert font-semibold tracking-tighter">
               Active visibility
             </h1>
-            <label className="flex flex-row justify-between items-center w-fit h-fit">
-              {/* <input type="checkbox" className="appearance-none peer" checked={isOnline}/> */}
-              <input
-                type="checkbox"
-                className="appearance-none peer"
-                checked={isOnline}
-                onClick={() => setIsOnline(!isOnline)}
-              />
-              <span className="w-14 h-8 flex items-center flex-shrink-0 ml-4 p-1 bg-isOffline rounded-full duration-300 ease-in-out peer-checked:bg-isOnline after:w-6 after:h-6 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-6"></span>
-            </label>
+            <Switch isOn={isOnline} handleToggle={() => setIsOnline(!isOnline)} />
           </div>
         </div>
 
