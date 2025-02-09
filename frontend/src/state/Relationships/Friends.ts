@@ -28,5 +28,9 @@ const friendsSlice = createSlice({
     },
 });
 
+export const isInFriends = (state: FriendsState, id: string | number) => {
+    return state.friends.some((friend) => friend.id === id);
+}
+
 export const { addFriend, removeFriend } = friendsSlice.actions;
 export default friendsSlice.reducer;

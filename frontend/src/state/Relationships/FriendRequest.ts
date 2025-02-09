@@ -29,5 +29,9 @@ const friendRequestSlice = createSlice({
     },
 });
 
+export const isInRequests = (state: FriendRequestState, id: string | number) => {
+    return state.requests.some((request) => request.id === id);
+};
+
 export const { addRequest, removeRequest } = friendRequestSlice.actions;
 export default friendRequestSlice.reducer;
