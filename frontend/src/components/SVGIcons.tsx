@@ -239,8 +239,8 @@ export function PenIcon(): JSX.Element {
 export function AddFrientIcon(): JSX.Element {
   return (
     <svg
-      width="36"
-      height="30"
+      width="26"
+      height="20"
       viewBox="0 0 48 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -252,6 +252,22 @@ export function AddFrientIcon(): JSX.Element {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+export function PenddingIcon(): JSX.Element {
+  return (
+    <svg
+      width="21"
+      height="10"
+      viewBox="0 0 41 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="36" cy="5" r="5" fill="#0E0E0E" />
+      <circle cx="20" cy="5" r="5" fill="#0E0E0E" />
+      <circle cx="5" cy="5" r="5" fill="#0E0E0E" />
     </svg>
   );
 }

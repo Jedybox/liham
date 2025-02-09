@@ -207,7 +207,7 @@ function SideBar(): JSX.Element {
         <div
           className={`absolute transition-all ease-in-out duration-500 w-full h-full
           ${currentTab[3] ? "opacity-100" : "opacity-0 pointer-events-none"}
-           overflow-auto hide-scrollbar gap-3 flex flex-col items-start`}
+           overflow-auto hide-scrollbar gap-4 flex flex-col items-start z-auto`}
         >
           {
             searchResults ? (
