@@ -60,13 +60,14 @@ function SearchResult({
             if (isFriendRequestSent) {
               dispatch(removeRequest(userID));
             } else {
-              dispatch(addRequest({ id: userID, username, is_friend: false }));
+              dispatch(addRequest(userID));
             }
             
             setIsFriendRequestSent(isInRequests(isFriendRequest, userID));
+            console.log(isInRequests(isFriendRequest, userID));
           }}
         >
-          {areFriends ? <MessageIcon/> : isFriendRequestSent ? <PenddingIcon /> : <AddFrientIcon />}
+          {username === user.name ? null : (areFriends ? <MessageIcon/> : (isFriendRequestSent ? <PenddingIcon /> : <AddFrientIcon />))}
         </div>
       </div>
     </>
