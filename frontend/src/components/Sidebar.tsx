@@ -10,10 +10,10 @@ import {
   InfoIcon,
   PreferencesIcon,
   PrivacyIcon,
-  ThemeIcon,
 } from "./SVGIcons";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import axios from "axios";
+import SearchResult from "./SearchResult";
 
 function SideBar(): JSX.Element {
   const navigate = useNavigate();
@@ -28,7 +28,15 @@ function SideBar(): JSX.Element {
   ]);
 
   const [tabIndicator, setTabIndicator] = useState<boolean>(true);
-  const [searchResults, setSearchResults] = useState<object | null>(null);
+  interface SearchResultType {
+    [key: string]: {
+      username: string;
+      is_friend: boolean;
+      id: number;
+    };
+  }
+
+  const [searchResults, setSearchResults] = useState<SearchResultType | null>(null);
 
   const changeSidebar = async (
     event:
@@ -180,12 +188,6 @@ function SideBar(): JSX.Element {
           </button>
           <button
             className="flex gap-2 items-center"
-            onClick={() => navigate("/theme")}
-          >
-            <ThemeIcon /> <h1>Theme</h1>
-          </button>
-          <button
-            className="flex gap-2 items-center"
             onClick={() => navigate("/learn")}
           >
             <BulbIcon /> <h1>Learn</h1>
@@ -200,12 +202,17 @@ function SideBar(): JSX.Element {
         <div
           className={`absolute transition-all ease-in-out duration-500 w-full h-full
           ${currentTab[3] ? "opacity-100" : "opacity-0 pointer-events-none"}
-           overflow-auto hide-scrollbar`}
+           overflow-auto hide-scrollbar gap-3 flex flex-col items-start`}
         >
           {
             searchResults ? (
               Object.keys(searchResults).map((key) => (
-                <ConvoBox key={key} />
+                <SearchResult
+                  key={key}
+                  username={searchResults[key].username}
+                  isFriend={searchResults[key].is_friend}
+                  userID={searchResults[key].id.toString()}
+                />
               ))
             ) : (
               <h1>No results found</h1>
