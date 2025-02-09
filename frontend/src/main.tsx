@@ -19,32 +19,32 @@ import { Provider } from "react-redux";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Provider store={store}>
               <ProtectedRoute>
                 <App />
               </ProtectedRoute>
-            }
-          >
-            <Route path="/m/:id" element={<Conversation />} />
-            <Route path="/u/:id" element={<UserAccount />} />
-            <Route path="/privacy" element={<UserPrivacy />} />
-            <Route path="*" element={<h1>Not Found</h1>} />
-            <Route path="/preferences" element={<UserPreferences />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/learn" element={<Learn />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/logout" element={<LogOut />} />
-          <Route path="/logout-and-sign-in" element={<LogOutAndSingIn />} />
+            </Provider>
+          }
+        >
+          <Route path="/m/:id" element={<Conversation />} />
+          <Route path="/u/:id" element={<UserAccount />} />
+          <Route path="/privacy" element={<UserPrivacy />} />
           <Route path="*" element={<h1>Not Found</h1>} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+          <Route path="/preferences" element={<UserPreferences />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/learn" element={<Learn />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/logout" element={<LogOut />} />
+        <Route path="/logout-and-sign-in" element={<LogOutAndSingIn />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>
 );

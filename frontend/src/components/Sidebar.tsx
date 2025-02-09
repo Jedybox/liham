@@ -15,7 +15,12 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import axios from "axios";
 import SearchResult from "./SearchResult";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
+
 function SideBar(): JSX.Element {
+  const user = useSelector((state: RootState) => state.user);
+
   const navigate = useNavigate();
 
   const [subject, setSubject] = useState<string>("");
@@ -165,12 +170,12 @@ function SideBar(): JSX.Element {
           className={`absolute transition-all ease-in-out duration-500 w-full h-full bg-primary 
           ${
             currentTab[2] ? "-translate-x-0" : "-translate-x-[110%]"
-          } flex flex-col gap-2 items-start px-5`}
+          } flex flex-col gap-2 items-start px-5 rounded-lg overflow-auto hide-scrollbar`}
         >
-          <h1 className="">Settings</h1>
+          <h1 className="text-2xl">Settings</h1>
           <button
             className="flex gap-2 items-center"
-            onClick={() => navigate("/u/123")}
+            onClick={() => navigate(`/u/${user.id}`)}
           >
             <AccountIcon /> <h1>Account</h1>
           </button>
